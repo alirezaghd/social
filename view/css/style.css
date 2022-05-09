@@ -1,0 +1,50 @@
+
+.btn_nav{
+    width: 47px !important;
+    height: 47px !important;
+    background-color: #E4E6EB;
+    border: none;
+}
+.btn_navbar_center{
+    width: 100px !important;
+    padding: 20px!important;
+    border: none;
+    border-radius: 10px;
+    margin-right: 30px;
+
+}
+.drop_min_width{
+    min-width: 20rem !important;
+
+}
+.m_navbar{
+    margin-right: 13%;
+    padding-left: 13%;
+
+}
+#search{
+    border: none;
+    background-color: #E4E6EB;
+    border-radius: 50px;
+    width: 220px;
+}
+
+body{
+    background-color: #F0F2F5 !important;
+}
+
+.bg_nav{
+    background-color: white;
+}
+
+.btn_cover{
+    position: relative !important;
+    right: 5% !important;
+    bottom: 10% !important;
+}
+
+/*.profile_pos{*/
+/*    position: relative !important;*/
+/*    left: 5% !important;*/
+/*    top: 15% !important;*/
+/*}*/
