@@ -1,9 +1,30 @@
 <?php
-include "header.php";
+include "view\header.php";
 ?>
 
 <div class="container">
+    <?php if(isset($_SESSION["message"])): ?>
+    <div class="row justify-content-center mt-5">
+        <div class="col-12">
+            <?php if($_SESSION["message_type"] == "success"): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <?php echo $_SESSION["message"] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php endif; ?>
 
+            <?php if($_SESSION["message_type"] == "error"): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?php echo $_SESSION["message"] ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
+        </div>
+    </div>
+    <?php unset($_SESSION["message"]) ?>
+
+    <?php endif; ?>
     <div class="row justify-content-center mt-5">
 
         <div class="col-lg-5 col-md-10 col-sm-10 col-10 ">
@@ -11,7 +32,7 @@ include "header.php";
 
 
                 <div class="card-body">
-                    <form >
+                    <form method="post" action="login">
                         <div class="mb-3">
                             <label class="form-label ">نام کاربری</label>
                             <input type="text" class="form-control" name="username">
@@ -20,7 +41,6 @@ include "header.php";
                             <label class="form-label ">گذرواژه</label>
                             <input type="password" name="password" class="form-control">
                         </div>
-
 
 
                         <div class="mb-3 form-check">
@@ -57,49 +77,62 @@ include "header.php";
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="row g-3" action="../controller/register.php" method="post">
+                                        <form class="row g-3 "  action="register" method="post" id="register_form" enctype="multipart/form-data">
                                             <div class="col-lg-6 col-md-12 col-sm-12 col-12">
                                                 <input type="text" name="firstname" class="form-control" placeholder="نام">
                                             </div>
                                             <div class="col-lg-6 col-md-12 col-sm-12 col-12">
                                                 <input type="text" name="lastname" class="form-control" placeholder="نام خانوادگی">
                                             </div>
+
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">@</span>
+                                                <input type="text" name="Username" class="form-control" placeholder="نام کاربری" aria-label="Username" aria-describedby="basic-addon1" required>
+                                                </div>
+                                            </div>
+
                                             <div class="col-lg-6 col-md-12 col-sm-12 col-12">
                                                 <input type="text" name="email" class="form-control" placeholder="ایمیل " >
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <input type="password" name="password" class="form-control"  placeholder="گذرواژه">
+                                            </div>
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <input type="password" class="form-control" name="password2"  placeholder="تکرار گذرواژه">
                                             </div>
                                             <div class="col-lg-6 col-md-12 col-sm-12 col-12">
                                                 <input type="text" name="mobile"  class="form-control" placeholder=" موبایل" >
                                             </div>
                                             <div class="col-lg-6 col-md-12 col-sm-12 col-12">
-                                                <input type="text" name="password" class="form-control"  placeholder="گذرواژه">
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-12">
-                                                <input type="text" class="form-control"  placeholder="تکرار گذرواژه">
-                                            </div>
-
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-12">
-                                                <h6 class="mb-3">تاریخ تولد</h6>
 
                                                 <h3 hidden="hidden">From Date</h3>
                                                 <div class="input-group mb-3">
                                                     <span id="dtp1" class="input-group-text cursor-pointer" data-mds-dtp-guid="f43a28f4-a501-4ed8-afe2-13879d016db3" data-bs-original-title="" title="" data-mds-dtp-group="group1" data-from-date="true"> <i class="fas fa-calendar"></i> </span>
-                                                    <input type="text"  name="birthday" data-name="dtp1-text" class="form-control">
+                                                    <input type="text" placeholder="تاریخ تولد"  name="birthday" data-name="dtp1-text" class="form-control">
                                                 </div>
 
                                             </div>
 
 
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-12">
-                                                <h6 class="mb-4">جنسیت</h6>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input"  type="radio" name="men" id="inlineRadio1" value="option1">
-                                                    <label class="form-check-label" for="inlineRadio1">مرد</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="women" id="inlineRadio2" value="option2">
-                                                    <label class="form-check-label" for="inlineRadio2">زن</label>
+                                            <div class="col-lg-2 col-md-12 col-sm-12 col-12 mt-0">
+                                                <h6 class="mb-2">جنسیت</h6>
+                                                <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
+                                                    <input type="radio" class="btn-check" name="gender"  id="btnradio1"value="1" autocomplete="off" >
+                                                    <label class="btn btn-outline-secondary" for="btnradio1">مرد</label>
+
+                                                    <input type="radio" class="btn-check" name="gender" value="0" id="btnradio2" autocomplete="off">
+                                                    <label class="btn btn-outline-secondary" for="btnradio2">زن</label>
+
                                                 </div>
                                             </div>
+                                            <div class="col-lg-10 col-md-12 col-sm-12 col-12 mt-0">
+                                                <h6 class="mb-2 text-start">بیوگرافی</h6>
+
+                                                <textarea class="form-control" name="bio" id="exampleFormControlTextarea1" placeholder="بیوگرافی" rows="3"></textarea>
+                                            </div>
+                                                </form>
 
 
                                             </div>
@@ -108,9 +141,8 @@ include "header.php";
 <!--                                            </div>-->
 
                                                 <div class="modal-footer  d-flex justify-content-center   ">
-                                                    <button type="submit" class="btn  btn-success">ذخیره</button>
+                                                    <button type="submit" form="register_form" class="btn  btn-success">ذخیره</button>
                                                 </div>
-                                        </form>
                                     </div>
 
                                 </div>

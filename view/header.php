@@ -11,8 +11,8 @@
 
     <title>Social</title>
 
-    <meta name="keywords" content=" reminders,note,Alarm,keep">
-    <meta name="description" content="Google Keep">
+    <meta name="keywords" content="  ">
+    <meta name="description" content=" ">
     <meta name="author" content="Alireza Gholamrezaei">
 
 
