@@ -1,3 +1,10 @@
+<?php
+include "model/database.php";
+
+
+
+?>
+
 <nav class="navbar navbar-expand-lg navbar-light bg_nav ">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,8 +38,11 @@
                 <li class="nav-item">
                     <div class="ms-3 btn bg-transparent">
                         <a href="profile.php" class="text-decoration-none text-dark">
-                            <h6 class="d-inline  "> Sara</h6>
-                            <img src="view/img/team-3.jpg" width="47px"  class="img-fluid rounded-pill  " >
+                            <h6 class="d-inline ">
+                            <?php  echo $_SESSION["username"];
+                            ?>
+                            </h6>
+<!--                            <img src="view/img/team-3.jpg" width="47px"  class="img-fluid rounded-pill  " >-->
                         </a>
 
                     </div>
@@ -163,7 +173,7 @@
                             </li>
 
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="logout">
                                     <div class="row d-flex align-items-center mt-2">
                                         <div class="col-2">
                                             <div class="btn rounded-pill btn_nav text-center">

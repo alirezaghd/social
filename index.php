@@ -26,19 +26,24 @@
             require __DIR__ . "/view/profile.php";
             break;
 
-
-        case("/social/register"):
-        case("/social/register.php"):
-
-        require __DIR__ . "/controller/register.php";
-            break;
-
         case("/social/login"):
-        case("/social/login.php"):
-
             require __DIR__ . "/controller/login.php";
             break;
 
+        case("/social/register"):
+        case("/social/register.php"):
+            require __DIR__ . "/controller/register.php";
+            break;
+
+        case("/social/post"):
+        case("/social/post.php"):
+            require __DIR__ . "/controller/post.php";
+            break;
+
+        case("/social/logout"):
+        case("/social/logout.php"):
+            require __DIR__ . "/controller/log_out.php";
+            break;
 
         default:
             require __DIR__ . "/view/404.php";

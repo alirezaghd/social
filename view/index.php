@@ -5,22 +5,25 @@ include "view\header.php";
 <div class="container">
     <?php if(isset($_SESSION["message"])): ?>
     <div class="row justify-content-center mt-5">
+                <?php for($i=0, $len=count($_SESSION["message"]); $i<$len; $i++): ?>
+
         <div class="col-12">
-            <?php if($_SESSION["message_type"] == "success"): ?>
+            <?php if($_SESSION["message_type"][$i] == "success"): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?php echo $_SESSION["message"] ?>
+                    <?php echo $_SESSION["message"][$i] ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php endif; ?>
 
-            <?php if($_SESSION["message_type"] == "error"): ?>
+            <?php if($_SESSION["message_type"][$i] == "error"): ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?php echo $_SESSION["message"] ?>
+                    <?php echo $_SESSION["message"][$i] ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif; ?>
 
         </div>
+        <?php endfor; ?>
     </div>
     <?php unset($_SESSION["message"]) ?>
 
@@ -35,13 +38,12 @@ include "view\header.php";
                     <form method="post" action="login">
                         <div class="mb-3">
                             <label class="form-label ">نام کاربری</label>
-                            <input type="text" class="form-control" name="username">
+                            <input type="text" class="form-control" name="Username">
                         </div>
                         <div class="mb-3">
                             <label class="form-label ">گذرواژه</label>
                             <input type="password" name="password" class="form-control">
                         </div>
-
 
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">

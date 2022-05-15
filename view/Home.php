@@ -1,17 +1,24 @@
+<?php if ($_SESSION["login_status"] != null && $_SESSION["login_status"] == true):?>
+
 <?php
 include "header.php";
+
 include "navbar.php";
+
+$posts = $db->query("SELECT * FROM posts");
 
 ?>
 
 <div class="container-fluid" >
     <div class="row justify-content-center mt-5">
+<!-- Right side-->
         <div class="col-3">
             <div class="list-group position-absolute  ">
                 <button type="button" class="list-group-item list-group-item-action bg-transparent border-0" aria-current="true">
                    <a class="text-decoration-none text-dark" href="profile.php">
                        <img src="view/img/team-3.jpg" width="40px"  class="img-fluid rounded-pill " >
-                        <p class="d-inline ms-3">Sara</p>
+                       <?php  echo $_SESSION["username"];
+                       ?>
                    </a>
                 </button>
 
@@ -94,16 +101,17 @@ include "navbar.php";
             </div>
 
         </div>
+<!-- put Post -->
         <div class="col-6">
             <div class="card ">
                 <div class="card-header">
                     چی توی ذهنته یک پست جدید بزار
                 </div>
                 <div class="card-body">
-                    <form method="post" action="controller/post.php" id="newpostform">
+                    <form method="post" action="post" id="newpostform">
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea class="form-control" name="captions" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
 
                         <div class="mb-3">
@@ -133,7 +141,8 @@ include "navbar.php";
 
     </div>
 
-
+<!-- show posts -->
+    <?php foreach ($posts as $post): ?>
     <div class="row justify-content-center mt-5 ">
         <div class="col-6">
             <div class="card ">
@@ -147,14 +156,15 @@ include "navbar.php";
                         <div class="col-11" >
                             <p class="fw-bold  mb-0"> <a href="#" class="text-decoration-none">mamad gholi</a>  </p>
                             <p class="text-secondary mb-0">
-                               <small>7 hours ago</small> </p>
+                               <small> <?php echo $post["time"]?>
+                               </small> </p>
                         </div>
 
                     </div>
                 </div>
                 <div class="card-body">
                     <p>
-                        iaishdacaiucbjkncakjbncaigdbajnd alkcno i aos jdasij joasdj da oisdh asld hsodih
+                        <?php echo $post["caption"]?>
                     </p>
                     <img  src="https://picsum.photos/700/400" class="img-fluid"  alt="...">
                 </div>
@@ -170,7 +180,10 @@ include "navbar.php";
             </div>
         </div>
     </div>
+    <?php endforeach;?>
 
 </div>
-
+<?php else:
+    header("Location: index");
+ endif; ?>
 <?php include "footer.php" ?>

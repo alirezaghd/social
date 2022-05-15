@@ -17,7 +17,7 @@ if ($password == $password2)
 {
     if (strlen($user_name) >= 4)
     {
-        $users_count = $db->query("SELECT * FROM usres WHERE username = '$user_name'")->num_rows;
+        $users_count = $db->query("SELECT * FROM users WHERE username = '$user_name'")->num_rows;
         if($users_count == 0)
         {
             $secure_password = md5($password);

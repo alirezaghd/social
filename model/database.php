@@ -11,7 +11,7 @@ if($db->connect_error)
 else
 {
     $db->query("SET CHARACTER SET uft8");
-//    mysqli_set_charset($db,"utf8");
+    mysqli_set_charset($db,"utf8");
 }
 
 ?>
