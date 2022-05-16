@@ -2,51 +2,51 @@
     session_start();
 
     $request = $_SERVER["REQUEST_URI"];
-
+    $request = str_replace("/social","", $request);
     switch ($request)
     {
-        case("/social"):
-        case("/social/"):
-        case("/social/index"):
-            require __DIR__ . "/view/index.php";
+
+        case("/"):
+        case("/index"):
+            require "controller/index.php";
             break;
 
         case("/social/about.php"):
-            require __DIR__ . "/view/about.php";
+            require "view/about.php";
             break;
 
-        case("/social/Home.php"):
-        case("/social/home.php"):
-        case("/social/home"):
+        case("/Home.php"):
+        case("/home.php"):
+        case("/home"):
 
-        require __DIR__ . "/view/Home.php";
+        require "controller/Home.php";
             break;
 
-        case("/social/profile.php"):
-            require __DIR__ . "/view/profile.php";
+        case("/profile.php"):
+            require "view/profile.php";
             break;
 
-        case("/social/login"):
-            require __DIR__ . "/controller/login.php";
+        case("/login"):
+            require "controller/login.php";
             break;
 
-        case("/social/register"):
-        case("/social/register.php"):
-            require __DIR__ . "/controller/register.php";
+        case("/register"):
+        case("/register.php"):
+            require "controller/register.php";
             break;
 
-        case("/social/post"):
-        case("/social/post.php"):
-            require __DIR__ . "/controller/post.php";
+        case("/post"):
+        case("/post.php"):
+            require "controller/post.php";
             break;
 
-        case("/social/logout"):
-        case("/social/logout.php"):
-            require __DIR__ . "/controller/log_out.php";
+        case("/logout"):
+        case("/logout.php"):
+            require "controller/log_out.php";
             break;
 
         default:
-            require __DIR__ . "/view/404.php";
+            require "view/404.php";
             break;
     }
 

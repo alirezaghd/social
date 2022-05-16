@@ -2,10 +2,8 @@
 
 <?php
 include "header.php";
-
 include "navbar.php";
 
-$posts = $db->query("SELECT * FROM posts");
 
 ?>
 
@@ -154,9 +152,9 @@ $posts = $db->query("SELECT * FROM posts");
 
                         </div>
                         <div class="col-11" >
-                            <p class="fw-bold  mb-0"> <a href="#" class="text-decoration-none">mamad gholi</a>  </p>
+                            <p class="fw-bold  mb-0"> <a href="#" class="text-decoration-none"><?php echo $post["username"];?></a>  </p>
                             <p class="text-secondary mb-0">
-                               <small> <?php echo $post["time"]?>
+                               <small> <?php echo $post["time"];?>
                                </small> </p>
                         </div>
 
@@ -164,17 +162,29 @@ $posts = $db->query("SELECT * FROM posts");
                 </div>
                 <div class="card-body">
                     <p>
-                        <?php echo $post["caption"]?>
+                        <?php echo $post["caption"];?>
                     </p>
-                    <img  src="https://picsum.photos/700/400" class="img-fluid"  alt="...">
+                    <img  src="<?php echo $post["media"];?>" class="img-fluid"  alt="...">
                 </div>
                 <div class="card-footer ">
                     <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-thumbs-up "></i> <span class="badge bg-secondary">4</span>
+                        <i class="far fa-thumbs-up "></i> <span class="badge bg-secondary">104</span>
                     </button>
-                    <button type="button" class="btn btn-outline-secondary ">
+                    <button type="button" class="btn btn-outline-secondary " data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $post["id"];?>" aria-expanded="false" aria-controls="collapseExample">
                         <i class="far fa-comment"></i> <span class="badge bg-secondary">4</span>
                     </button>
+                    <div class="collapse" id="collapse<?php echo $post["id"];?>">
+
+                        <div class="card card-header mt-2">
+                            <textarea class="form-control" name="bio"  placeholder="کامنت خود را بنویسید" rows="1"></textarea>
+                        </div>
+                        <?php foreach ($comments as $comment): ?>
+                        <div class="card card-body mt-2">
+                            <?php echo $comment["text"];?>
+                        </div>
+                        <?php endforeach;?>
+
+                    </div>
 
                 </div>
             </div>
