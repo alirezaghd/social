@@ -170,18 +170,22 @@ include "navbar.php";
                     <button type="button" class="btn btn-outline-secondary">
                         <i class="far fa-thumbs-up "></i> <span class="badge bg-secondary">104</span>
                     </button>
-                    <button type="button" class="btn btn-outline-secondary " data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $post["id"];?>" aria-expanded="false" aria-controls="collapseExample">
+                    <button type="button" class="btn btn-outline-secondary " data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $post["postid"];?>" aria-expanded="false" aria-controls="collapseExample">
                         <i class="far fa-comment"></i> <span class="badge bg-secondary">4</span>
                     </button>
-                    <div class="collapse" id="collapse<?php echo $post["id"];?>">
+                    <div class="collapse" id="collapse<?php echo $post["postid"];?>">
 
                         <div class="card card-header mt-2">
                             <textarea class="form-control" name="bio"  placeholder="کامنت خود را بنویسید" rows="1"></textarea>
                         </div>
                         <?php foreach ($comments as $comment): ?>
+                        <?php if($post["postid"] == $comment["post_id"]): ?>
+
                         <div class="card card-body mt-2">
                             <?php echo $comment["text"];?>
                         </div>
+                            <?php endif;?>
+
                         <?php endforeach;?>
 
                     </div>
