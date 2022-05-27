@@ -140,7 +140,7 @@ include "navbar.php";
     </div>
 
 <!-- show posts -->
-    <?php foreach ($posts as $post): ?>
+    <?php foreach ($my_array as $post): ?>
     <div class="row justify-content-center mt-5 ">
         <div class="col-6">
             <div class="card ">
@@ -148,13 +148,29 @@ include "navbar.php";
                     <div class="row" >
                         <div class="col-1" >
 
-                            <img class="rounded-pill" src="https://picsum.photos/50/50" class="img-fluid"  alt="...">
+                            <img class="rounded-pill" src="<?php
+
+                            if ($post["image"] != "")
+                            {
+                                echo $post["image"];
+                            }
+                            else
+                            {
+                                if ($post["gender"] == 0){
+                                    echo "images/users/userfemale.png";
+                                }
+                                else{
+                                    echo "images/users/usermale.png";
+                                }
+                            }
+
+                            ?>" class="img-fluid" width="50px" loading="lazy"  alt="...">
 
                         </div>
                         <div class="col-11" >
                             <p class="fw-bold  mb-0"> <a href="#" class="text-decoration-none"><?php echo $post["username"];?></a>  </p>
                             <p class="text-secondary mb-0">
-                               <small> <?php echo $post["time"];?>
+                               <small> <?php echo time2str($post["time"]);?>
                                </small> </p>
                         </div>
 
@@ -164,29 +180,64 @@ include "navbar.php";
                     <p>
                         <?php echo $post["caption"];?>
                     </p>
-                    <img  src="<?php echo $post["media"];?>" class="img-fluid"  alt="...">
+<!--                    --><?php //if (isset($post["media"])):?>
+<!--                        --><?php //for ($i = 0; $i < 3; $i++): ?>
+<!--                        --><?php // if ($media_type[$i] == "image"): ?>
+<!--                            <img  src="--><?php //echo $post["media"];?><!--" class="img-fluid" loading="lazy" alt="...">-->
+<!--                        --><?php //endif; ?>
+<!--                        --><?php //if ($media_type[$i] == "video"): ?>
+<!--                        <video >-->
+<!--                            <source src="--><?php //echo $post["media"];?><!--" type="video/mp4">-->
+<!---->
+<!--                        </video>-->
+<!--                        --><?php //endif; ?>
+<!--                         --><?php //if ($media_type[$i] == "audio"): ?>
+<!---->
+<!--                            <audio>-->
+<!--                                <source src="--><?php //echo $post["media"];?><!--" >-->
+<!--                            </audio>-->
+<!--                            --><?php //endif; ?>
+<!---->
+<!--                        --><?php //endfor; ?>
+<!--                    --><?php //endif; ?>
+
+
+                  <img  src="<?php echo $post["media"];?>" class="img-fluid" loading="lazy" alt="...">
+
                 </div>
                 <div class="card-footer ">
                     <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-thumbs-up "></i> <span class="badge bg-secondary">104</span>
+                        <i class="far fa-thumbs-up "></i> <span class="badge bg-secondary">
+                            <?php echo $post["likes"]["count"]; ?>
+                        </span>
                     </button>
                     <button type="button" class="btn btn-outline-secondary " data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $post["postid"];?>" aria-expanded="false" aria-controls="collapseExample">
-                        <i class="far fa-comment"></i> <span class="badge bg-secondary">4</span>
+                        <i class="far fa-comment"></i> <span class="badge bg-secondary">
+                            <?php echo $post["comments_num"]["count"]; ?>
+                        </span>
                     </button>
                     <div class="collapse" id="collapse<?php echo $post["postid"];?>">
 
                         <div class="card card-header mt-2">
                             <textarea class="form-control" name="bio"  placeholder="کامنت خود را بنویسید" rows="1"></textarea>
                         </div>
-                        <?php foreach ($comments as $comment): ?>
-                        <?php if($post["postid"] == $comment["post_id"]): ?>
+                        <div class="list-group">
 
-                        <div class="card card-body mt-2">
-                            <?php echo $comment["text"];?>
-                        </div>
-                            <?php endif;?>
+                        <?php foreach ($post["comments"] as $comment): ?>
+
+                                <a href="#" class="list-group-item list-group-item-action mt-2" aria-current="true">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><?php echo $comment["username"];?></h5>
+                                        <small><?php echo time2str($comment["time"]);?></small>
+                                    </div>
+                                    <p class="mb-1">
+                                        <?php echo $comment["text"];?>
+                                    </p>
+                                </a>
 
                         <?php endforeach;?>
+                        </div>
+
 
                     </div>
 
