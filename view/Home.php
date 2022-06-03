@@ -3,8 +3,6 @@
 <?php
 include "header.php";
 include "navbar.php";
-
-
 ?>
 
 <div class="container-fluid" >
@@ -149,7 +147,6 @@ include "navbar.php";
                         <div class="col-1" >
 
                             <img class="rounded-pill" src="<?php
-
                             if ($post["image"] != "")
                             {
                                 echo $post["image"];
@@ -167,65 +164,82 @@ include "navbar.php";
                             ?>" class="img-fluid" width="50px" loading="lazy"  alt="...">
 
                         </div>
-                        <div class="col-11" >
+                        <div class="col-10" >
                             <p class="fw-bold  mb-0"> <a href="#" class="text-decoration-none"><?php echo $post["username"];?></a>  </p>
                             <p class="text-secondary mb-0">
                                <small> <?php echo time2str($post["time"]);?>
                                </small> </p>
                         </div>
-
-                    </div>
+                        <?php if ($_SESSION["user_id"] == $post["user_id"] ): ?>
+                        <div class="col-1" >
+                            <div class="dropdown">
+                                <button class="btn btn-light dropdown-toggle border-0" type="button" id="dropdownCenterBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" >
+                                    <li><a class="dropdown-item" href="#">ویرایش</a></li>
+                                    <li><a class="dropdown-item" href="#">حذف</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                        </div>
                 </div>
                 <div class="card-body">
                     <p>
                         <?php echo $post["caption"];?>
                     </p>
-<!--                    --><?php //if (isset($post["media"])):?>
-<!--                        --><?php //for ($i = 0; $i < 3; $i++): ?>
-<!--                        --><?php // if ($media_type[$i] == "image"): ?>
-<!--                            <img  src="--><?php //echo $post["media"];?><!--" class="img-fluid" loading="lazy" alt="...">-->
-<!--                        --><?php //endif; ?>
-<!--                        --><?php //if ($media_type[$i] == "video"): ?>
-<!--                        <video >-->
-<!--                            <source src="--><?php //echo $post["media"];?><!--" type="video/mp4">-->
-<!---->
-<!--                        </video>-->
-<!--                        --><?php //endif; ?>
-<!--                         --><?php //if ($media_type[$i] == "audio"): ?>
-<!---->
-<!--                            <audio>-->
-<!--                                <source src="--><?php //echo $post["media"];?><!--" >-->
-<!--                            </audio>-->
-<!--                            --><?php //endif; ?>
-<!---->
-<!--                        --><?php //endfor; ?>
-<!--                    --><?php //endif; ?>
 
 
                   <img  src="<?php echo $post["media"];?>" class="img-fluid" loading="lazy" alt="...">
 
                 </div>
                 <div class="card-footer ">
-                    <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-thumbs-up "></i> <span class="badge bg-secondary">
+                    <form class="d-inline" id="form-like-<?php echo $post["postid"];?>">
+                        <input type="hidden" name="post_id" value="<?php echo $post["postid"];?>">
+                        <button type="button" id="btn-like-<?php echo $post["postid"];?>" onclick="send_like(<?php echo $post["postid"]; ?>)" class="btn
+                            <?php
+                        if($post["like_user"] == 0)
+                                {
+                                    echo "btn-outline-secondary";
+                                }
+                        else{
+                                    echo "btn-secondary";
+                                }
+                                ?>">
+                            <i class="far fa-thumbs-up "></i>
+                            <span id="count-like-<?php echo $post["postid"];?>" class="badge btn  bg-secondary">
                             <?php echo $post["likes"]["count"]; ?>
-                        </span>
-                    </button>
+                            </span>
+                        </button>
+
+                    </form>
+
                     <button type="button" class="btn btn-outline-secondary " data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $post["postid"];?>" aria-expanded="false" aria-controls="collapseExample">
                         <i class="far fa-comment"></i> <span class="badge bg-secondary">
                             <?php echo $post["comments_num"]["count"]; ?>
                         </span>
                     </button>
                     <div class="collapse" id="collapse<?php echo $post["postid"];?>">
+                        <form id="form-comment-<?php echo $post["postid"];?>">
+                            <div class="card card-header mt-2">
+                                <div class="input-group mb-3">
+                                    <textarea class="form-control" name ="text"  placeholder="کامنت خود را بنویسید" rows="1" aria-describedby="button-addon1"></textarea>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="send_comments(<?php echo $post["postid"]; ?>,'<?php echo $post["username"];?>')" id="button-addon1"> ارسال </button>
+                                    <input type="hidden" name="post_id" value="<?php echo $post["postid"];?>">
 
-                        <div class="card card-header mt-2">
-                            <textarea class="form-control" name="bio"  placeholder="کامنت خود را بنویسید" rows="1"></textarea>
-                        </div>
-                        <div class="list-group">
+                                </div>
+
+                            </div>
+
+                        </form>
+
+
+                        <ul class="list-group" id="listcomments-<?php echo $post["postid"];?>">
 
                         <?php foreach ($post["comments"] as $comment): ?>
 
-                                <a href="#" class="list-group-item list-group-item-action mt-2" aria-current="true">
+                                <li  class="list-group-item list-group-item-action mt-2" aria-current="true">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1"><?php echo $comment["username"];?></h5>
                                         <small><?php echo time2str($comment["time"]);?></small>
@@ -233,10 +247,10 @@ include "navbar.php";
                                     <p class="mb-1">
                                         <?php echo $comment["text"];?>
                                     </p>
-                                </a>
+                                </li>
 
                         <?php endforeach;?>
-                        </div>
+                        </ul>
 
 
                     </div>
@@ -251,4 +265,87 @@ include "navbar.php";
 <?php else:
     header("Location: index");
  endif; ?>
+
 <?php include "footer.php" ?>
+<script >
+    function send_like(postid) {
+
+        let btn = document.getElementById("btn-like-" + postid)
+        let count_number_tag = document.getElementById("count-like-" + postid)
+        let form_like = document.getElementById("form-like-" + postid)
+        let form_data = new FormData(form_like)
+
+
+        fetch("send-like",{
+            method :"post",
+            body:form_data
+        }).then(result=> result.text()
+        ).then(result=>{
+
+            if(result == 1)
+            {
+                btn.classList.remove("btn-outline-secondary")
+                btn.classList.add("btn-secondary")
+                let number = count_number_tag.innerHTML;
+                number++
+                count_number_tag.innerHTML = number;
+                <?php  $_SESSION["like"] = 0 ?>
+            }
+            else if(result == 0){
+                btn.classList.remove("btn-secondary")
+                btn.classList.add("btn-outline-secondary")
+                let number = count_number_tag.innerHTML;
+                number--;
+                count_number_tag.innerHTML = number;
+                <?php  $_SESSION["like"] = 1 ?>
+
+            }
+        }).catch(erorr =>{
+            alert(erorr)
+        });
+
+    }
+
+
+
+    function send_comments(postid,user) {
+        let form = document.getElementById("form-comment-" + postid)
+        let form_data = new FormData(form)
+
+
+        fetch("send_comments",{
+            method :"post",
+            body:form_data
+        }).then(result =>{
+            let comments = document.getElementById("listcomments-" + postid);
+
+            let li = document.createElement("LI");
+            li.className = "list-group-item list-group-item-action mt-2";
+
+            let div = document.createElement("DIV");
+            div.className = "d-flex w-100 justify-content-between";
+
+            let h5 = document.createElement("H5");
+            h5.className = "mb-1";
+            h5.innerHTML = user;
+
+            let small = document.createElement("SMALL");
+            small.innerHTML = " هم اکنون"
+
+            let p = document.createElement("P");
+            p.className = "mb-1";
+
+            p.innerHTML = form_data.get("text")
+
+            li.appendChild(div);
+            div.appendChild(h5);
+            div.appendChild(small);
+            li.appendChild(p);
+            comments.appendChild(li)
+
+        }).catch(error=>{
+            alert(error);
+        });
+
+    }
+</script>

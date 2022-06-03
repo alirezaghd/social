@@ -1,6 +1,8 @@
 <?php
     session_start();
 
+    date_default_timezone_set("Asia/tehran");
+
     $request = $_SERVER["REQUEST_URI"];
     $request = str_replace("/social","", $request);
     switch ($request)
@@ -28,6 +30,14 @@
 
         case("/login"):
             require "controller/login.php";
+            break;
+
+        case("/send_comments"):
+            require "controller/send_comments.php";
+            break;
+
+        case("/send-like"):
+            require "controller/send_like.php";
             break;
 
         case("/register"):

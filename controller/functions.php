@@ -15,12 +15,12 @@ function time2str($ts)
         {
             if($diff < 60) return 'همین الان';
             if($diff < 120) return '1 دقیقه قبل';
-            if($diff < 3600) return floor($diff / 60) . ' minutes ago';
+            if($diff < 3600) return floor($diff / 60) . ' دقیقه قبل';
             if($diff < 7200) return 'یک ساعت قبل';
-            if($diff < 86400) return floor($diff / 3600) . ' hours ago';
+            if($diff < 86400) return floor($diff / 3600) . ' ساعت قبل';
         }
         if($day_diff == 1) return 'دیروز';
-        if($day_diff < 7) return $day_diff . ' days ago';
+        if($day_diff < 7) return $day_diff . ' روز قبل';
         if($day_diff < 31) return ceil($day_diff / 7) . ' هفته قبل';
         if($day_diff < 60) return 'ماه قبل';
         return date('F Y', $ts);
